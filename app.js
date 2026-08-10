@@ -1,148 +1,28 @@
 /* ==========================================================================
-   UP ROADWAYS (UpBusPlay) - Full Application Engine with Real YouTube Audio Player
-   Streams 100% Real Audio for "Bus Driver ki Playlist"
+   UP ROADWAYS (UpBusPlay) - Native YouTube Playlist Audio Engine
+   Loads user's exact playlist (PLeatb7hupNV_AWUl_7ttbsKeCQh8tF5N4)
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  // 1. Bus Driver ki Playlist Database with Real YouTube Audio Video IDs
+  // 1. Bus Driver ki Playlist Database
   const TRACKS = [
-    {
-      id: 1,
-      title: "Saaton Janam Main Tere",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "6:02",
-      ytId: "N0jnLZxYwYc",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-    },
-    {
-      id: 2,
-      title: "Mujhse Mohabbat Ka Izhaar",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "6:15",
-      ytId: "gXp5eP15gq0",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-    },
-    {
-      id: 3,
-      title: "Tumsa Koi Pyaara",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "5:45",
-      ytId: "P6H-Xy5a7x0",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-    },
-    {
-      id: 4,
-      title: "Waada Raha Sanam",
-      artist: "Abhijeet & Alka Yagnik",
-      duration: "6:08",
-      ytId: "N6y0_uK4K8E",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
-    },
-    {
-      id: 5,
-      title: "Chhupana Bhi Nahin Aata",
-      artist: "Vinod Rathod",
-      duration: "7:01",
-      ytId: "D3H1j803e5w",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
-    },
-    {
-      id: 6,
-      title: "Jhanjharia",
-      artist: "Abhijeet Bhattacharya",
-      duration: "5:20",
-      ytId: "mFkQ9JzK0k4",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
-    },
-    {
-      id: 7,
-      title: "Husn Hai Suhana",
-      artist: "Abhijeet & Chandana Dixit",
-      duration: "6:00",
-      ytId: "4b18uN0F42w",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
-    },
-    {
-      id: 8,
-      title: "Jeeye To Jeeye Kaise",
-      artist: "Kumar Sanu, SPB & Alka Yagnik",
-      duration: "6:38",
-      ytId: "vP88D93E4w4",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
-    },
-    {
-      id: 9,
-      title: "Pehli Pehli Baar Mohabbat Ki Hai",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "7:40",
-      ytId: "W9_6Lp5N9d0",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
-    },
-    {
-      id: 10,
-      title: "To Chalun",
-      artist: "Roopkumar Rathod",
-      duration: "7:10",
-      ytId: "g3aG8k75g64",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
-    },
-    {
-      id: 11,
-      title: "Tumhein Dekhen Meri Aankhen",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "6:50",
-      ytId: "n3k8W3s8K4k",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-    },
-    {
-      id: 12,
-      title: "Raah Mein Unse Mulaqat",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "6:16",
-      ytId: "4f4WwP70g-o",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-    },
-    {
-      id: 13,
-      title: "Tu Jo Hans Hans Ke",
-      artist: "Udit Narayan & Kavita Krishnamurthy",
-      duration: "5:55",
-      ytId: "7K4H8J7L8-0",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-    },
-    {
-      id: 14,
-      title: "Dil Kehta Hai",
-      artist: "Kumar Sanu & Alka Yagnik",
-      duration: "6:42",
-      ytId: "l9510103k44",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
-    },
-    {
-      id: 15,
-      title: "Ae Kash Ke Hum",
-      artist: "Kumar Sanu",
-      duration: "5:10",
-      ytId: "hL2H5W13k44",
-      cover: "assets/up_bus_cover.png",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
-    }
+    { id: 1, title: "Saaton Janam Main Tere", artist: "Kumar Sanu & Alka Yagnik", duration: "6:02", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { id: 2, title: "Mujhse Mohabbat Ka Izhaar", artist: "Kumar Sanu & Alka Yagnik", duration: "6:15", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { id: 3, title: "Tumsa Koi Pyaara", artist: "Kumar Sanu & Alka Yagnik", duration: "5:45", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+    { id: 4, title: "Waada Raha Sanam", artist: "Abhijeet & Alka Yagnik", duration: "6:08", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+    { id: 5, title: "Chhupana Bhi Nahin Aata", artist: "Vinod Rathod", duration: "7:01", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
+    { id: 6, title: "Jhanjharia", artist: "Abhijeet Bhattacharya", duration: "5:20", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
+    { id: 7, title: "Husn Hai Suhana", artist: "Abhijeet & Chandana Dixit", duration: "6:00", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" },
+    { id: 8, title: "Jeeye To Jeeye Kaise", artist: "Kumar Sanu, SPB & Alka Yagnik", duration: "6:38", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+    { id: 9, title: "Pehli Pehli Baar Mohabbat Ki Hai", artist: "Kumar Sanu & Alka Yagnik", duration: "7:40", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" },
+    { id: 10, title: "To Chalun", artist: "Roopkumar Rathod", duration: "7:10", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" },
+    { id: 11, title: "Tumhein Dekhen Meri Aankhen", artist: "Kumar Sanu & Alka Yagnik", duration: "6:50", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { id: 12, title: "Raah Mein Unse Mulaqat", artist: "Kumar Sanu & Alka Yagnik", duration: "6:16", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { id: 13, title: "Tu Jo Hans Hans Ke", artist: "Udit Narayan & Kavita Krishnamurthy", duration: "5:55", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+    { id: 14, title: "Dil Kehta Hai", artist: "Kumar Sanu & Alka Yagnik", duration: "6:42", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+    { id: 15, title: "Ae Kash Ke Hum", artist: "Kumar Sanu", duration: "5:10", cover: "assets/up_bus_cover.png", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" }
   ];
 
   let currentIdx = 0;
@@ -176,18 +56,19 @@
   const closePlaylist = document.getElementById('close-playlist');
   const playlistContainer = document.getElementById('playlist-container');
 
-  // Initialize YouTube IFrame Player API for Real Songs
+  // Initialize YouTube Native Playlist IFrame Player
   window.onYouTubeIframeAPIReady = function () {
     ytPlayer = new YT.Player('yt-player', {
       height: '1',
       width: '1',
-      videoId: TRACKS[0].ytId,
       playerVars: {
         autoplay: 0,
         controls: 0,
         disablekb: 1,
         fs: 0,
-        rel: 0
+        rel: 0,
+        listType: 'playlist',
+        list: 'PLeatb7hupNV_AWUl_7ttbsKeCQh8tF5N4'
       },
       events: {
         onReady: function () {
@@ -200,6 +81,7 @@
             iconPause.style.display = 'block';
             playerCover.classList.add('playing');
             startTimeTracker();
+            syncTrackDetails();
           } else if (event.data === YT.PlayerState.PAUSED) {
             isPlaying = false;
             iconPlay.style.display = 'block';
@@ -213,6 +95,21 @@
       }
     });
   };
+
+  // Sync track details from YouTube playlist index
+  function syncTrackDetails() {
+    if (isYtReady && ytPlayer && typeof ytPlayer.getPlaylistIndex === 'function') {
+      const idx = ytPlayer.getPlaylistIndex();
+      if (idx >= 0 && idx < TRACKS.length) {
+        currentIdx = idx;
+        const track = TRACKS[currentIdx];
+        playerTitle.textContent = track.title;
+        playerArtist.textContent = track.artist;
+        playerCover.src = track.cover;
+        renderPlaylistItems();
+      }
+    }
+  }
 
   // Real-time Clock
   function updateClock() {
@@ -228,8 +125,8 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // Load Track
-  function loadTrack(idx) {
+  // Load Track by index
+  function loadTrack(idx, autoPlay = true) {
     if (idx < 0) idx = TRACKS.length - 1;
     if (idx >= TRACKS.length) idx = 0;
     currentIdx = idx;
@@ -243,17 +140,31 @@
     timeCurrent.textContent = '0:00';
     timeDuration.textContent = track.duration;
 
-    if (isYtReady && ytPlayer) {
-      ytPlayer.loadVideoById(track.ytId);
+    if (isYtReady && ytPlayer && typeof ytPlayer.playVideoAt === 'function') {
+      if (autoPlay || isPlaying) {
+        ytPlayer.playVideoAt(currentIdx);
+        isPlaying = true;
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+        playerCover.classList.add('playing');
+      }
     } else {
       audio.src = track.src;
+      if (autoPlay || isPlaying) {
+        audio.play().then(() => {
+          isPlaying = true;
+          iconPlay.style.display = 'none';
+          iconPause.style.display = 'block';
+          playerCover.classList.add('playing');
+        }).catch(() => {});
+      }
     }
 
     renderPlaylistItems();
   }
 
   function playAudio() {
-    if (isYtReady && ytPlayer) {
+    if (isYtReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
       ytPlayer.playVideo();
       isPlaying = true;
       iconPlay.style.display = 'none';
@@ -265,7 +176,7 @@
         iconPlay.style.display = 'none';
         iconPause.style.display = 'block';
         playerCover.classList.add('playing');
-      }).catch(err => {
+      }).catch(() => {
         startSynthMelody();
         isPlaying = true;
         iconPlay.style.display = 'none';
@@ -276,7 +187,7 @@
   }
 
   function pauseAudio() {
-    if (isYtReady && ytPlayer) {
+    if (isYtReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
       ytPlayer.pauseVideo();
     } else {
       audio.pause();
@@ -298,18 +209,30 @@
   }
 
   function prevTrack() {
-    loadTrack(currentIdx - 1);
-    playAudio();
+    if (isYtReady && ytPlayer && typeof ytPlayer.previousVideo === 'function') {
+      ytPlayer.previousVideo();
+      isPlaying = true;
+      iconPlay.style.display = 'none';
+      iconPause.style.display = 'block';
+      playerCover.classList.add('playing');
+    } else {
+      loadTrack(currentIdx - 1, true);
+    }
   }
 
   function nextTrack() {
     if (isShuffle) {
       const randomIdx = Math.floor(Math.random() * TRACKS.length);
-      loadTrack(randomIdx);
+      loadTrack(randomIdx, true);
+    } else if (isYtReady && ytPlayer && typeof ytPlayer.nextVideo === 'function') {
+      ytPlayer.nextVideo();
+      isPlaying = true;
+      iconPlay.style.display = 'none';
+      iconPause.style.display = 'block';
+      playerCover.classList.add('playing');
     } else {
-      loadTrack(currentIdx + 1);
+      loadTrack(currentIdx + 1, true);
     }
-    playAudio();
   }
 
   // Seeker Progress Tracker
@@ -458,8 +381,7 @@
         <div style="font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255,255,255,0.6);">${t.duration}</div>
       `;
       item.addEventListener('click', () => {
-        loadTrack(i);
-        playAudio();
+        loadTrack(i, true);
         modalPlaylist.classList.remove('active');
       });
       playlistContainer.appendChild(item);
@@ -488,6 +410,6 @@
   });
 
   // Initialize
-  loadTrack(0);
+  loadTrack(0, false);
 
 })();
