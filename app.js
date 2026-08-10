@@ -519,7 +519,7 @@
     tktNumber.textContent = 'UP-90S-' + Math.floor(1000 + Math.random() * 9000);
 
     const now = new Date();
-    const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'SHORT', year: 'numeric' }).toUpperCase();
+    const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
     tktDate.textContent = dateStr;
 
     openModal(modalTicket);
