@@ -907,42 +907,118 @@
     }
   }
 
-  // Authentic Vintage Bus Horn Sound (POOO-POOO!)
+  // ==========================================================================
+  // Authentic Indian Bus Air Horn Sound (Heavy Pom-Pom / Peee-Pooo!)
+  // Multi-layered synthesis: fundamental + harmonic + sub-bass + air noise
+  // Recreates the iconic UPSRTC / Tata / Ashok Leyland air pressure horn
+  // ==========================================================================
   function playIndianBusHorn() {
     initAudioCtx();
     const now = audioCtx.currentTime;
 
+    // Master gain for entire horn
+    const masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0, now);
+    masterGain.gain.linearRampToValueAtTime(0.45, now + 0.06); // Fast attack
+    masterGain.gain.setValueAtTime(0.45, now + 0.35);
+    masterGain.gain.linearRampToValueAtTime(0, now + 0.42);    // Brief gap
+    masterGain.gain.linearRampToValueAtTime(0.5, now + 0.48);  // Second blast
+    masterGain.gain.setValueAtTime(0.5, now + 1.1);
+    masterGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5); // Fade out
+    masterGain.connect(audioCtx.destination);
+
+    // Layer 1: Fundamental tone (low air horn ~310 Hz)
     const osc1 = audioCtx.createOscillator();
-    const osc2 = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
     osc1.type = 'sawtooth';
-    osc2.type = 'sawtooth';
-
-    osc1.frequency.setValueAtTime(370, now);
-    osc2.frequency.setValueAtTime(445, now);
-
-    gain.gain.setValueAtTime(0.25, now);
-    gain.gain.setValueAtTime(0, now + 0.18);
-    gain.gain.setValueAtTime(0.25, now + 0.25);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
-
-    osc1.connect(gain);
-    osc2.connect(gain);
-    gain.connect(audioCtx.destination);
-
+    osc1.frequency.setValueAtTime(310, now);
+    osc1.frequency.linearRampToValueAtTime(318, now + 0.1);  // slight bend up
+    osc1.frequency.setValueAtTime(310, now + 0.42);
+    osc1.frequency.linearRampToValueAtTime(315, now + 0.55);
+    const gain1 = audioCtx.createGain();
+    gain1.gain.setValueAtTime(0.35, now);
+    osc1.connect(gain1);
+    gain1.connect(masterGain);
     osc1.start(now);
+    osc1.stop(now + 1.5);
+
+    // Layer 2: Upper harmonic (adds the "brass" bite ~465 Hz)
+    const osc2 = audioCtx.createOscillator();
+    osc2.type = 'sawtooth';
+    osc2.frequency.setValueAtTime(465, now);
+    osc2.frequency.linearRampToValueAtTime(472, now + 0.1);
+    osc2.frequency.setValueAtTime(465, now + 0.42);
+    osc2.frequency.linearRampToValueAtTime(470, now + 0.55);
+    const gain2 = audioCtx.createGain();
+    gain2.gain.setValueAtTime(0.22, now);
+    osc2.connect(gain2);
+    gain2.connect(masterGain);
     osc2.start(now);
-    osc1.stop(now + 0.55);
-    osc2.stop(now + 0.55);
+    osc2.stop(now + 1.5);
+
+    // Layer 3: Sub-bass rumble (~155 Hz — chest vibration feel)
+    const osc3 = audioCtx.createOscillator();
+    osc3.type = 'triangle';
+    osc3.frequency.setValueAtTime(155, now);
+    const gain3 = audioCtx.createGain();
+    gain3.gain.setValueAtTime(0.18, now);
+    osc3.connect(gain3);
+    gain3.connect(masterGain);
+    osc3.start(now);
+    osc3.stop(now + 1.5);
+
+    // Layer 4: Third harmonic for richness (~620 Hz)
+    const osc4 = audioCtx.createOscillator();
+    osc4.type = 'square';
+    osc4.frequency.setValueAtTime(620, now);
+    const gain4 = audioCtx.createGain();
+    gain4.gain.setValueAtTime(0.08, now);
+    osc4.connect(gain4);
+    gain4.connect(masterGain);
+    osc4.start(now);
+    osc4.stop(now + 1.5);
+
+    // Layer 5: Air noise (hissing compressed air release)
+    const bufferSize = audioCtx.sampleRate * 1.5;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      noiseData[i] = (Math.random() * 2 - 1) * 0.15;
+    }
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+
+    // Bandpass filter the noise to sound like air escaping
+    const noiseFilter = audioCtx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(800, now);
+    noiseFilter.Q.setValueAtTime(0.8, now);
+
+    const noiseGain = audioCtx.createGain();
+    noiseGain.gain.setValueAtTime(0.12, now);
+
+    noiseSource.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(masterGain);
+    noiseSource.start(now);
+    noiseSource.stop(now + 1.5);
   }
 
+  let hornCooldown = false;
   btnHorn.addEventListener('click', () => {
+    if (hornCooldown) return;
+    hornCooldown = true;
+
     playIndianBusHorn();
-    btnHorn.style.transform = 'scale(0.92)';
+    btnHorn.style.transform = 'scale(0.9)';
+    btnHorn.style.transition = 'transform 0.08s ease';
     setTimeout(() => {
       btnHorn.style.transform = 'scale(1)';
-    }, 150);
+    }, 180);
+
+    // Prevent spam-clicking (cooldown = horn duration)
+    setTimeout(() => {
+      hornCooldown = false;
+    }, 1600);
   });
 
   // Render Playlist Modal Items
