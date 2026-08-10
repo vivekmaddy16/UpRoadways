@@ -599,7 +599,7 @@
             // Fallback to HTML5 audio engine automatically
             if (isPlaying) {
               audio.src = TRACKS[currentIdx].src;
-              audio.play().catch(() => startSynthMelody());
+              audio.play().catch(() => {});
             }
           }
         }
