@@ -638,59 +638,55 @@
     timeCurrent.textContent = '0:00';
     timeDuration.textContent = track.duration;
 
+    audio.src = track.src;
+
     if (isYtReady && ytPlayer && typeof ytPlayer.playVideoAt === 'function') {
-      if (autoPlay || isPlaying) {
+      try {
         ytPlayer.playVideoAt(currentIdx);
-        isPlaying = true;
-        iconPlay.style.display = 'none';
-        iconPause.style.display = 'block';
-        playerCover.classList.add('playing');
-      }
-    } else {
-      audio.src = track.src;
-      if (autoPlay || isPlaying) {
-        audio.play().then(() => {
-          isPlaying = true;
-          iconPlay.style.display = 'none';
-          iconPause.style.display = 'block';
-          playerCover.classList.add('playing');
-        }).catch(() => {});
-      }
+      } catch (e) {}
+    }
+
+    if (autoPlay || isPlaying) {
+      playAudio();
     }
 
     renderPlaylistItems();
   }
 
   function playAudio() {
+    initAudioCtx();
+    isPlaying = true;
+    iconPlay.style.display = 'none';
+    iconPause.style.display = 'block';
+    playerCover.classList.add('playing');
+    startTimeTracker();
+
     if (isYtReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
-      ytPlayer.playVideo();
-      isPlaying = true;
-      iconPlay.style.display = 'none';
-      iconPause.style.display = 'block';
-      playerCover.classList.add('playing');
-    } else {
-      audio.play().then(() => {
-        isPlaying = true;
-        iconPlay.style.display = 'none';
-        iconPause.style.display = 'block';
-        playerCover.classList.add('playing');
-      }).catch(() => {
-        startSynthMelody();
-        isPlaying = true;
-        iconPlay.style.display = 'none';
-        iconPause.style.display = 'block';
-        playerCover.classList.add('playing');
-      });
+      try {
+        ytPlayer.playVideo();
+      } catch (err) {}
     }
+
+    // Safety fallback to HTML5 audio if YouTube is blocked or paused
+    setTimeout(() => {
+      const ytState = (ytPlayer && typeof ytPlayer.getPlayerState === 'function') ? ytPlayer.getPlayerState() : -1;
+      if (ytState !== 1) { // 1 = YT.PlayerState.PLAYING
+        if (!audio.src || audio.src === window.location.href || audio.ended) {
+          audio.src = TRACKS[currentIdx].src;
+        }
+        audio.play().catch(() => {
+          startSynthMelody();
+        });
+      }
+    }, 450);
   }
 
   function pauseAudio() {
     if (isYtReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-      ytPlayer.pauseVideo();
-    } else {
-      audio.pause();
-      stopSynthMelody();
+      try { ytPlayer.pauseVideo(); } catch (e) {}
     }
+    audio.pause();
+    stopSynthMelody();
     isPlaying = false;
     iconPlay.style.display = 'block';
     iconPause.style.display = 'none';
@@ -707,30 +703,19 @@
   }
 
   function prevTrack() {
-    if (isYtReady && ytPlayer && typeof ytPlayer.previousVideo === 'function') {
-      ytPlayer.previousVideo();
-      isPlaying = true;
-      iconPlay.style.display = 'none';
-      iconPause.style.display = 'block';
-      playerCover.classList.add('playing');
-    } else {
-      loadTrack(currentIdx - 1, true);
-    }
+    let nextIdx = currentIdx - 1;
+    if (nextIdx < 0) nextIdx = TRACKS.length - 1;
+    loadTrack(nextIdx, true);
   }
 
   function nextTrack() {
+    let nextIdx = currentIdx + 1;
     if (isShuffle) {
-      const randomIdx = Math.floor(Math.random() * TRACKS.length);
-      loadTrack(randomIdx, true);
-    } else if (isYtReady && ytPlayer && typeof ytPlayer.nextVideo === 'function') {
-      ytPlayer.nextVideo();
-      isPlaying = true;
-      iconPlay.style.display = 'none';
-      iconPause.style.display = 'block';
-      playerCover.classList.add('playing');
-    } else {
-      loadTrack(currentIdx + 1, true);
+      nextIdx = Math.floor(Math.random() * TRACKS.length);
+    } else if (nextIdx >= TRACKS.length) {
+      nextIdx = 0;
     }
+    loadTrack(nextIdx, true);
   }
 
   // Seeker Progress Tracker
