@@ -689,9 +689,7 @@
         if (!audio.src || audio.src === window.location.href || audio.ended) {
           audio.src = TRACKS[currentIdx].src;
         }
-        audio.play().catch(() => {
-          startSynthMelody();
-        });
+        audio.play().catch(() => {});
       }
     }, 450);
   }
@@ -701,7 +699,6 @@
       try { ytPlayer.pauseVideo(); } catch (e) {}
     }
     audio.pause();
-    stopSynthMelody();
     isPlaying = false;
     iconPlay.style.display = 'block';
     iconPause.style.display = 'none';
