@@ -488,18 +488,296 @@ body::before {
   color: rgba(255, 255, 255, 0.68);
 }
 
-@media (max-width: 640px) {
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   Mobile-first progressive enhancement
+   ========================================================================== */
+
+/* ---- Extra Small (phones ≤ 480px) ---- */
+@media (max-width: 480px) {
+  .app-viewport {
+    padding: 0.75rem 0.9rem 1rem;
+  }
+
+  .clock-display {
+    font-size: 0.82rem;
+  }
+
+  .highway-badge {
+    padding: 0.28rem 0.65rem;
+    font-size: 0.72rem;
+    gap: 0.35rem;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .top-right-btn {
+    width: 30px;
+    height: 30px;
+  }
+  .top-right-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero-title-hindi {
+    font-size: 2.6rem;
+    margin-bottom: 0.6rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.95);
+  }
+
+  .hero-quote {
+    font-size: 0.78rem;
+    padding: 0.45rem 1rem;
+    margin-bottom: 1rem;
+    max-width: 95%;
+  }
+
   .horn-btn-container {
-    top: auto;
-    bottom: 6.5rem;
+    position: fixed;
     left: 50%;
+    top: auto;
+    bottom: 6rem;
     transform: translateX(-50%);
   }
+
+  .horn-pill-btn {
+    padding: 0.45rem 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .horn-icon-circle {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+
+  .horn-text-hindi {
+    font-size: 0.78rem;
+  }
+
+  .horn-text-eng {
+    font-size: 0.6rem;
+  }
+
   .player-container {
-    bottom: 1.2rem;
+    bottom: 0.8rem;
+    width: calc(100% - 1rem);
+    max-width: 100%;
+  }
+
+  .player-card {
+    padding: 0.5rem 0.7rem;
+    gap: 0.55rem;
+    border-radius: 22px;
+  }
+
+  .player-thumb-img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .player-song-title {
+    font-size: 0.78rem;
+  }
+
+  .player-song-artist {
+    font-size: 0.65rem;
+  }
+
+  .player-time-text {
+    font-size: 0.6rem;
+  }
+
+  .player-controls {
+    gap: 0.15rem;
+  }
+
+  .ctrl-icon-btn {
+    width: 26px;
+    height: 26px;
+  }
+  .ctrl-icon-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .ctrl-icon-btn.btn-play-primary {
+    width: 32px;
+    height: 32px;
+  }
+
+  .modal-backdrop {
+    padding: 0.75rem;
+  }
+
+  .modal-content-card {
+    border-radius: 18px;
+    max-height: 85vh;
+  }
+
+  .modal-header {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+
+  .modal-body {
+    padding: 0.65rem 0.85rem;
+  }
+
+  .playlist-track-item {
+    padding: 0.5rem 0.65rem;
+    gap: 0.6rem;
+  }
+
+  .playlist-thumb {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+  }
+
+  .playlist-title {
+    font-size: 0.8rem;
+  }
+
+  .playlist-artist {
+    font-size: 0.65rem;
+  }
+}
+
+/* ---- Small (large phones 481px–640px) ---- */
+@media (min-width: 481px) and (max-width: 640px) {
+  .app-viewport {
+    padding: 0.9rem 1.2rem 1.4rem;
+  }
+
+  .hero-title-hindi {
+    font-size: 3.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-quote {
+    font-size: 0.88rem;
+    padding: 0.5rem 1.2rem;
+    margin-bottom: 1.2rem;
+    max-width: 92%;
+  }
+
+  .horn-btn-container {
+    position: fixed;
+    left: 50%;
+    top: auto;
+    bottom: 6.2rem;
+    transform: translateX(-50%);
+  }
+
+  .player-container {
+    bottom: 1rem;
     width: calc(100% - 1.5rem);
   }
+
+  .player-card {
+    border-radius: 24px;
+  }
+
+  .player-thumb-img {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* ---- Medium (tablets 641px–768px) ---- */
+@media (min-width: 641px) and (max-width: 768px) {
+  .app-viewport {
+    padding: 1rem 1.5rem 1.6rem;
+  }
+
   .hero-title-hindi {
-    font-size: 3.4rem;
+    font-size: 4.2rem;
+  }
+
+  .hero-quote {
+    font-size: 1rem;
+    max-width: 85%;
+  }
+
+  .horn-btn-container {
+    left: 1.5rem;
+  }
+
+  .player-container {
+    max-width: 480px;
+  }
+}
+
+/* ---- Large (small laptops 769px–1024px) ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-title-hindi {
+    font-size: 5.5rem;
+  }
+
+  .hero-quote {
+    font-size: 1.15rem;
+  }
+}
+
+/* ---- Landscape phones (short viewports) ---- */
+@media (max-height: 500px) {
+  .app-viewport {
+    padding: 0.5rem 1rem 0.6rem;
+  }
+
+  .hero-title-hindi {
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-quote {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .horn-btn-container {
+    position: fixed;
+    left: 1rem;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+
+  .horn-text-group {
+    display: none;
+  }
+
+  .horn-pill-btn {
+    padding: 0.4rem;
+    border-radius: 50%;
+  }
+
+  .player-container {
+    bottom: 0.5rem;
+  }
+
+  .player-card {
+    padding: 0.4rem 0.7rem;
+  }
+
+  .player-thumb-img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* ---- Safe area for notched phones (iPhone etc.) ---- */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .player-container {
+    bottom: calc(0.8rem + env(safe-area-inset-bottom));
+  }
+  .app-viewport {
+    padding-top: calc(0.75rem + env(safe-area-inset-top));
   }
 }
