@@ -538,7 +538,6 @@
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
   const btnShuffle = document.getElementById('btn-shuffle');
-  const btnPlaylist = document.getElementById('btn-playlist');
   const btnHorn = document.getElementById('btn-horn');
 
   const playerTitle = document.getElementById('player-title');
@@ -549,10 +548,6 @@
   const timeCurrent = document.getElementById('time-current');
   const timeDuration = document.getElementById('time-duration');
   const clockDisplay = document.getElementById('clock-display');
-
-  const modalPlaylist = document.getElementById('modal-playlist');
-  const closePlaylist = document.getElementById('close-playlist');
-  const playlistContainer = document.getElementById('playlist-container');
 
   // Initialize YouTube Native Playlist IFrame Player
   window.onYouTubeIframeAPIReady = function () {
@@ -619,7 +614,6 @@
         playerTitle.textContent = track.title;
         playerArtist.textContent = track.artist;
         playerCover.src = track.cover;
-        renderPlaylistItems();
       }
     }
   }
@@ -777,8 +771,6 @@
     if (autoPlay || isPlaying) {
       playAudio();
     }
-
-    renderPlaylistItems();
   }
 
   function playAudio() {
@@ -945,40 +937,6 @@
       hornCooldown = false;
       btnHorn.classList.remove('horn-playing');
     }, cooldownMs);
-  });
-
-  // Render Playlist Modal Items
-  function renderPlaylistItems() {
-    playlistContainer.innerHTML = '';
-    TRACKS.forEach((t, i) => {
-      const item = document.createElement('div');
-      item.className = `playlist-track-item ${i === currentIdx ? 'active' : ''}`;
-      item.innerHTML = `
-        <img src="${t.cover}" alt="Cover" class="playlist-thumb">
-        <div class="playlist-track-info">
-          <div class="playlist-title">${t.title}</div>
-          <div class="playlist-artist">${t.artist}</div>
-        </div>
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255,255,255,0.6);">${t.duration}</div>
-      `;
-      item.addEventListener('click', () => {
-        loadTrack(i, true);
-        modalPlaylist.classList.remove('active');
-      });
-      playlistContainer.appendChild(item);
-    });
-  }
-
-  // Playlist Modal Events
-  btnPlaylist.addEventListener('click', () => {
-    renderPlaylistItems();
-    modalPlaylist.classList.add('active');
-  });
-  closePlaylist.addEventListener('click', () => {
-    modalPlaylist.classList.remove('active');
-  });
-  modalPlaylist.addEventListener('click', (e) => {
-    if (e.target === modalPlaylist) modalPlaylist.classList.remove('active');
   });
 
   // Controls Event Listeners
