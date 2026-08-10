@@ -507,28 +507,20 @@ body::before {
     height: 6px;
   }
 
-  .top-right-btn {
-    width: 30px;
-    height: 30px;
-  }
-  .top-right-btn svg {
-    width: 14px;
-    height: 14px;
-  }
-
   .top-right-btns {
-    gap: 0.3rem;
+    gap: 0.35rem;
   }
   .top-right-btn {
     width: auto;
     height: auto;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.65rem;
-    gap: 0.25rem;
+    min-height: 32px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.68rem;
+    gap: 0.3rem;
   }
   .top-right-btn svg {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
   }
 
   .hero-title-hindi {
