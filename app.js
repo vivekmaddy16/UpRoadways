@@ -638,6 +638,119 @@
   setInterval(updateClock, 1000);
   updateClock();
 
+  // ==========================================================================
+  // Real-Time Auto-Syncing Passenger Counter Engine
+  // Synchronizes live visitor count across active browsers/tabs
+  // ==========================================================================
+  const liveCountEl = document.getElementById('live-count');
+  const tabId = 'passenger_' + Math.random().toString(36).substr(2, 9);
+  
+  // 1. Local Multi-Tab Sync via localStorage & BroadcastChannel
+  function getActiveTabCount() {
+    try {
+      const now = Date.now();
+      const tabs = JSON.parse(localStorage.getItem('up_bus_tabs') || '{}');
+      tabs[tabId] = now;
+      
+      let activeCount = 0;
+      for (const id in tabs) {
+        if (now - tabs[id] < 10000) {
+          activeCount++;
+        } else {
+          delete tabs[id];
+        }
+      }
+      localStorage.setItem('up_bus_tabs', JSON.stringify(tabs));
+      return activeCount;
+    } catch (e) {
+      return 1;
+    }
+  }
+
+  // Heartbeat to refresh tab presence
+  setInterval(() => {
+    getActiveTabCount();
+    updatePassengerDisplay();
+  }, 2500);
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'up_bus_tabs') {
+      updatePassengerDisplay();
+    }
+  });
+
+  window.addEventListener('beforeunload', () => {
+    try {
+      const tabs = JSON.parse(localStorage.getItem('up_bus_tabs') || '{}');
+      delete tabs[tabId];
+      localStorage.setItem('up_bus_tabs', JSON.stringify(tabs));
+    } catch (e) {}
+  });
+
+  // 2. Firebase Realtime Database Global Multi-Device Presence Sync
+  let firebaseOnlineCount = 0;
+  try {
+    const firebaseConfig = {
+      databaseURL: "https://uproadways-bus-default-rtdb.firebaseio.com"
+    };
+    if (typeof firebase !== 'undefined' && firebase.initializeApp) {
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+      const myRef = db.ref('passengers/' + tabId);
+      const allRef = db.ref('passengers');
+
+      db.ref('.info/connected').on('value', (snap) => {
+        if (snap.val() === true) {
+          myRef.onDisconnect().remove();
+          myRef.set({ online: true, ts: firebase.database.ServerValue.TIMESTAMP });
+        }
+      });
+
+      allRef.on('value', (snap) => {
+        if (snap.exists()) {
+          firebaseOnlineCount = snap.numChildren();
+        } else {
+          firebaseOnlineCount = 0;
+        }
+        updatePassengerDisplay();
+      });
+    }
+  } catch (err) {
+    console.log("Firebase presence init note:", err);
+  }
+
+  // Realistic Passenger Base Simulation for UP Highway Journey
+  let simulatedPassengers = Math.floor(Math.random() * 5) + 3; // 3 to 7 passengers base
+
+  // Smooth fluctuation every 14 seconds to mimic passengers boarding/debarking at stops
+  setInterval(() => {
+    const delta = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
+    simulatedPassengers = Math.max(1, Math.min(18, simulatedPassengers + delta));
+    updatePassengerDisplay();
+  }, 14000);
+
+  function updatePassengerDisplay() {
+    const localTabs = getActiveTabCount();
+    const activeVisitors = Math.max(localTabs, firebaseOnlineCount);
+    const totalPassengers = activeVisitors + (simulatedPassengers - 1);
+
+    if (liveCountEl) {
+      const cur = parseInt(liveCountEl.textContent) || 0;
+      if (cur !== totalPassengers) {
+        liveCountEl.style.transition = 'transform 0.2s ease, color 0.2s ease';
+        liveCountEl.style.transform = 'scale(1.35)';
+        liveCountEl.style.color = '#4ade80';
+        liveCountEl.textContent = totalPassengers;
+        setTimeout(() => {
+          liveCountEl.style.transform = 'scale(1)';
+          liveCountEl.style.color = '';
+        }, 300);
+      }
+    }
+  }
+
+  updatePassengerDisplay();
+
   // Load Track by index
   function loadTrack(idx, autoPlay = true) {
     if (idx < 0) idx = TRACKS.length - 1;
