@@ -221,6 +221,30 @@ body::before {
   transform: scale(0.95);
 }
 
+/* Horn OK Please Active/Playing State */
+.horn-pill-btn.horn-playing {
+  animation: horn-shake 0.12s infinite alternate, horn-ripple 1.2s infinite ease-in-out;
+  border-color: #ffc107 !important;
+  background: rgba(255, 193, 7, 0.25) !important;
+}
+
+@keyframes horn-shake {
+  0% { transform: rotate(-3deg) scale(1.05); }
+  100% { transform: rotate(3deg) scale(1.05); }
+}
+
+@keyframes horn-ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.6), 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 193, 7, 0), 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0), 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+
 .horn-icon-circle {
   display: grid;
   place-items: center;
