@@ -747,12 +747,13 @@
     const totalPassengers = activeVisitors + (simulatedPassengers - 1);
 
     if (liveCountEl) {
-      const cur = parseInt(liveCountEl.textContent) || 0;
-      if (cur !== totalPassengers) {
+      const newText = 'online';
+      const cur = liveCountEl.textContent;
+      if (cur !== newText) {
         liveCountEl.style.transition = 'transform 0.2s ease, color 0.2s ease';
-        liveCountEl.style.transform = 'scale(1.35)';
+        liveCountEl.style.transform = 'scale(1.1)';
         liveCountEl.style.color = '#4ade80';
-        liveCountEl.textContent = totalPassengers;
+        liveCountEl.textContent = newText;
         setTimeout(() => {
           liveCountEl.style.transform = 'scale(1)';
           liveCountEl.style.color = '';
