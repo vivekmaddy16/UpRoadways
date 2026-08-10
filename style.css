@@ -485,6 +485,27 @@ body::before {
    Mobile-first progressive enhancement
    ========================================================================== */
 
+/* Collapse Spotify/YT Music text to circular icons on all mobile/tablet viewports (<= 640px) */
+@media (max-width: 640px) {
+  .top-right-btns {
+    gap: 0.4rem;
+  }
+  .top-right-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .top-right-btn span {
+    display: none;
+  }
+  .top-right-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
 /* ---- Extra Small (phones ≤ 480px) ---- */
 @media (max-width: 480px) {
   .bg-container {
@@ -511,22 +532,6 @@ body::before {
     height: 6px;
   }
 
-  .top-right-btns {
-    gap: 0.35rem;
-  }
-  .top-right-btn {
-    width: auto;
-    height: auto;
-    min-height: 32px;
-    padding: 0.35rem 0.7rem;
-    font-size: 0.68rem;
-    gap: 0.3rem;
-  }
-  .top-right-btn svg {
-    width: 13px;
-    height: 13px;
-  }
-
   .hero-title-hindi {
     font-size: 2.6rem;
     margin-bottom: 0.3rem;
@@ -550,7 +555,7 @@ body::before {
     position: fixed;
     left: 50%;
     top: auto;
-    bottom: 6rem;
+    bottom: 10rem;
     transform: translateX(-50%);
   }
 
@@ -574,7 +579,7 @@ body::before {
   }
 
   .player-container {
-    bottom: 0.8rem;
+    bottom: 1.7rem;
     width: calc(100% - 1rem);
     max-width: 100%;
   }
@@ -647,12 +652,12 @@ body::before {
     position: fixed;
     left: 50%;
     top: auto;
-    bottom: 6.2rem;
+    bottom: 10.2rem;
     transform: translateX(-50%);
   }
 
   .player-container {
-    bottom: 1rem;
+    bottom: 1.8rem;
     width: calc(100% - 1.5rem);
   }
 
@@ -811,4 +816,17 @@ body::before {
   letter-spacing: 0.05em;
   z-index: 10;
   margin-top: 0.8rem;
+}
+
+/* Safe area for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .player-container {
+    bottom: calc(1.7rem + env(safe-area-inset-bottom)) !important;
+  }
+  .contact-footer {
+    bottom: calc(0.4rem + env(safe-area-inset-bottom)) !important;
+  }
+  .app-viewport {
+    padding-top: calc(0.75rem + env(safe-area-inset-top));
+  }
 }
