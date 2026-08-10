@@ -784,9 +784,8 @@
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   }
 
-  // Web Audio Synthesized Fallback Melody
+  // Web Audio Synthesized Engine for Bus Horn
   let audioCtx = null;
-  let synthTimer = null;
 
   function initAudioCtx() {
     if (!audioCtx) {
@@ -795,34 +794,6 @@
     }
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
-    }
-  }
-
-  function startSynthMelody() {
-    initAudioCtx();
-    if (synthTimer) return;
-    const notes = [329.63, 392.00, 440.00, 523.25, 587.33];
-    let nIdx = 0;
-    synthTimer = setInterval(() => {
-      if (!isPlaying || !audioCtx) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(notes[nIdx % notes.length], audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.5);
-      nIdx++;
-    }, 500);
-  }
-
-  function stopSynthMelody() {
-    if (synthTimer) {
-      clearInterval(synthTimer);
-      synthTimer = null;
     }
   }
 
