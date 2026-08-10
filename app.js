@@ -556,42 +556,57 @@
 
   // Initialize YouTube Native Playlist IFrame Player
   window.onYouTubeIframeAPIReady = function () {
-    ytPlayer = new YT.Player('yt-player', {
-      height: '1',
-      width: '1',
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        rel: 0,
-        listType: 'playlist',
-        list: 'PLeatb7hupNV_AWUl_7ttbsKeCQh8tF5N4'
-      },
-      events: {
-        onReady: function () {
-          isYtReady = true;
+    try {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '1',
+        width: '1',
+        host: 'https://www.youtube-nocookie.com',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          rel: 0,
+          enablejsapi: 1,
+          origin: window.location.origin || '*',
+          listType: 'playlist',
+          list: 'PLeatb7hupNV_AWUl_7ttbsKeCQh8tF5N4'
         },
-        onStateChange: function (event) {
-          if (event.data === YT.PlayerState.PLAYING) {
-            isPlaying = true;
-            iconPlay.style.display = 'none';
-            iconPause.style.display = 'block';
-            playerCover.classList.add('playing');
-            startTimeTracker();
-            syncTrackDetails();
-          } else if (event.data === YT.PlayerState.PAUSED) {
-            isPlaying = false;
-            iconPlay.style.display = 'block';
-            iconPause.style.display = 'none';
-            playerCover.classList.remove('playing');
-            stopTimeTracker();
-          } else if (event.data === YT.PlayerState.ENDED) {
-            nextTrack();
+        events: {
+          onReady: function () {
+            isYtReady = true;
+          },
+          onStateChange: function (event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              isPlaying = true;
+              iconPlay.style.display = 'none';
+              iconPause.style.display = 'block';
+              playerCover.classList.add('playing');
+              startTimeTracker();
+              syncTrackDetails();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              isPlaying = false;
+              iconPlay.style.display = 'block';
+              iconPause.style.display = 'none';
+              playerCover.classList.remove('playing');
+              stopTimeTracker();
+            } else if (event.data === YT.PlayerState.ENDED) {
+              nextTrack();
+            }
+          },
+          onError: function (e) {
+            console.warn("YouTube Player Error code:", e.data);
+            // Fallback to HTML5 audio engine automatically
+            if (isPlaying) {
+              audio.src = TRACKS[currentIdx].src;
+              audio.play().catch(() => startSynthMelody());
+            }
           }
         }
-      }
-    });
+      });
+    } catch (e) {
+      console.warn("YouTube Player initialization warning:", e);
+    }
   };
 
   // Sync track details from YouTube playlist index
