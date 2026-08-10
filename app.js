@@ -520,6 +520,24 @@
     "ytId": "s4slgbuwOfw",
     "cover": "assets/up_bus_cover.png",
     "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+  },
+  {
+    "id": 60,
+    "title": "Dil Hai Tumhaara",
+    "artist": "Nadeem Shravan - Topic",
+    "duration": "5:30",
+    "ytId": "CL-w9aJ3Uhw",
+    "cover": "assets/up_bus_cover.png",
+    "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+  },
+  {
+    "id": 61,
+    "title": "Dil Hai Tumhaara | Video Jukebox",
+    "artist": "90's Dard - Bollywood Songs",
+    "duration": "34:35",
+    "ytId": "6_2BRLr24WE",
+    "cover": "assets/up_bus_cover.png",
+    "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
   }
 ];
 
