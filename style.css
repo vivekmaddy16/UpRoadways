@@ -77,6 +77,7 @@ body::before {
   justify-content: space-between;
   align-items: center;
   z-index: 20;
+  position: relative;
 }
 
 .clock-display {
@@ -99,6 +100,9 @@ body::before {
   color: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pulse-dot {
@@ -761,4 +765,50 @@ body::before {
   .app-viewport {
     padding-top: calc(0.75rem + env(safe-area-inset-top));
   }
+}
+
+/* Developer Credits styling */
+.player-credits {
+  text-align: center;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+.player-credits a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+  padding-bottom: 1px;
+}
+
+.player-credits a:hover {
+  color: #ff9f43; /* Warm amber/orange hover highlight to match theme */
+  border-bottom-color: #ff9f43;
+  text-shadow: 0 0 6px rgba(255, 159, 67, 0.5);
+}
+
+/* Adjust credits on short viewports */
+@media (max-height: 500px) {
+  .player-credits {
+    margin-top: 0.35rem;
+    font-size: 0.62rem;
+  }
+}
+
+/* Contact Footer styling */
+.contact-footer {
+  width: 100%;
+  text-align: center;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.05em;
+  z-index: 10;
+  margin-top: 0.8rem;
 }
