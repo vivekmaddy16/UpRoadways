@@ -23,7 +23,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #0d1624;
+  background: #0b1320 !important;
   color: #ffffff;
   font-family: var(--font-main);
   user-select: none;
@@ -36,9 +36,11 @@ html, body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, rgba(15, 28, 48, 0.45) 0%, rgba(140, 33, 23, 0.55) 100%), url('assets/up_bus_stand.jpg?v=3') center/cover no-repeat !important;
+  background-image: linear-gradient(180deg, rgba(10, 20, 36, 0.42) 0%, rgba(28, 12, 12, 0.58) 100%), url('assets/up_bus_stand.jpg?v=5') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
   z-index: 0;
-  filter: brightness(0.9) contrast(1.05);
   transform: scale(1.02);
 }
 
